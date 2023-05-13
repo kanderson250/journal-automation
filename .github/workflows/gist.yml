@@ -1,0 +1,22 @@
+name: Create Journal Gist every week
+
+on:
+  schedule:
+    - cron: "0 15 * * 1" #Monday 8AM Pacific
+
+jobs:
+  create-gist:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x' # Use the latest version of Python
+      - name: Install dependencies
+        run: pip install -r requirements.txt 
+      - name: Run script
+        run: python create-gist.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Use the default token provided by GitHub Actions
